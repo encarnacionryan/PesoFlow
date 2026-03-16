@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1a73e8" />
+  <meta name="description" content="PesoFlow Tracker - Personal Finance Manager" />
+  <title>PesoFlow Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon.png" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <span class="logo">💰 PesoFlow</span>
+      <span class="tagline">Your Money, Tracked</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── SAVINGS BALANCE ── -->
+    <section class="card" id="balance-card">
+      <h2>🏦 Savings Balance</h2>
+      <div class="balance-display">
+        <span class="currency">₱</span>
+        <span id="balance-amount">0.00</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-green" onclick="openModal('deposit')">＋ Deposit</button>
+        <button class="btn btn-red"   onclick="openModal('withdraw')">－ Withdraw</button>
+        <button class="btn btn-blue"  onclick="openModal('topocket')">→ Pocket</button>
+      </div>
+    </section>
+
+    <!-- ── POCKET MONEY ── -->
+    <section class="card" id="pocket-card">
+      <h2>👛 Pocket Money</h2>
+      <div class="balance-display">
+        <span class="currency">₱</span>
+        <span id="pocket-amount">0.00</span>
+      </div>
+
+      <div class="bills-grid">
+        <div class="bill-row header-row">
+          <span>Denomination</span><span>Qty</span><span>Subtotal</span>
+        </div>
+        <!-- Bills -->
+        <div class="bill-row" data-denom="1000">
+          <span>₱1,000</span>
+          <input type="number" min="0" value="0" id="d1000" onchange="recalcPocket()" />
+          <span id="s1000">₱0</span>
+        </div>
+        <div class="bill-row" data-denom="500">
+          <span>₱500</span>
+          <input type="number" min="0" value="0" id="d500" onchange="recalcPocket()" />
+          <span id="s500">₱0</span>
+        </div>
+        <div class="bill-row" data-denom="100">
+          <span>₱100</span>
+          <input type="number" min="0" value="0" id="d100" onchange="recalcPocket()" />
+          <span id="s100">₱0</span>
+        </div>
+        <div class="bill-row" data-denom="50">
+          <span>₱50</span>
+          <input type="number" min="0" value="0" id="d50" onchange="recalcPocket()" />
+          <span id="s50">₱0</span>
+        </div>
+        <div class="bill-row" data-denom="20">
+          <span>₱20</span>
+          <input type="number" min="0" value="0" id="d20" onchange="recalcPocket()" />
+          <span id="s20">₱0</span>
+        </div>
+        <div class="bill-row" data-denom="10">
+          <span>₱10</span>
+          <input type="number" min="0" value="0" id="d10" onchange="recalcPocket()" />
+          <span id="s10">₱0</span>
+        </div>
+        <div class="bill-row" data-denom="5">
+          <span>₱5</span>
+          <input type="number" min="0" value="0" id="d5" onchange="recalcPocket()" />
+          <span id="s5">₱0</span>
+        </div>
+        <div class="bill-row" data-denom="1">
+          <span>₱1</span>
+          <input type="number" min="0" value="0" id="d1" onchange="recalcPocket()" />
+          <span id="s1">₱0</span>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn btn-green" onclick="openModal('addpocket')">＋ Add Cash</button>
+        <button class="btn btn-red"   onclick="openModal('spend')">－ Spend</button>
+        <button class="btn btn-gray"  onclick="saveBills()">💾 Save Bills</button>
+      </div>
+    </section>
+
+    <!-- ── EXPENSE GRAPH ── -->
+    <section class="card" id="graph-card">
+      <h2>📊 Pocket Spending</h2>
+      <div class="chart-wrap">
+        <canvas id="spendChart"></canvas>
+      </div>
+    </section>
+
+    <!-- ── TRANSACTIONS LOG ── -->
+    <section class="card" id="txn-card">
+      <h2>📋 Transactions</h2>
+      <button class="btn btn-gray btn-sm" onclick="clearTransactions()">🗑 Clear All</button>
+      <div id="txn-list">
+        <p class="empty-msg">No transactions yet.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── MODAL ── -->
+  <div id="modal-overlay" class="modal-overlay hidden" onclick="closeModal(event)">
+    <div class="modal-box">
+      <h3 id="modal-title">Amount</h3>
+      <input type="number" id="modal-input" min="0.01" step="0.01" placeholder="Enter amount (₱)" />
+      <p id="modal-error" class="modal-error hidden">Invalid or insufficient amount.</p>
+      <div class="btn-row">
+        <button class="btn btn-blue" onclick="confirmModal()">Confirm</button>
+        <button class="btn btn-gray" onclick="closeModalDirect()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

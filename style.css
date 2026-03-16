@@ -1,0 +1,271 @@
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #f0f4f9;
+  --card:     #ffffff;
+  --primary:  #1a73e8;
+  --green:    #27ae60;
+  --red:      #e74c3c;
+  --blue:     #2980b9;
+  --gray:     #7f8c8d;
+  --text:     #2c3e50;
+  --subtext:  #6c7a89;
+  --border:   #dce3ec;
+  --shadow:   0 2px 12px rgba(0,0,0,0.08);
+  --radius:   14px;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 32px;
+}
+
+/* ── HEADER ── */
+header {
+  background: linear-gradient(135deg, #1a73e8, #0d47a1);
+  color: #fff;
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.header-inner {
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo   { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.5px; }
+.tagline { font-size: 0.78rem; opacity: 0.8; }
+
+/* ── MAIN / CARDS ── */
+main {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--subtext);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* ── BALANCE DISPLAY ── */
+.balance-display {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+.currency {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+#balance-amount, #pocket-amount {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -1px;
+  word-break: break-all;
+}
+
+/* ── BUTTONS ── */
+.btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 11px 8px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.1s;
+  color: #fff;
+}
+.btn:active { transform: scale(0.96); filter: brightness(0.9); }
+
+.btn-green { background: var(--green); }
+.btn-red   { background: var(--red); }
+.btn-blue  { background: var(--blue); }
+.btn-gray  { background: var(--gray); }
+.btn-sm    { padding: 6px 12px; font-size: 0.78rem; flex: none; margin-bottom: 10px; }
+
+/* ── BILLS GRID ── */
+.bills-grid {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.bill-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 80px;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+.bill-row:last-child { border-bottom: none; }
+
+.header-row {
+  background: #f5f8ff;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--subtext);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 7px 12px;
+}
+
+.bill-row input[type="number"] {
+  width: 70px;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-size: 0.9rem;
+  text-align: center;
+  outline: none;
+  color: var(--text);
+  background: #f9fbff;
+}
+.bill-row input[type="number"]:focus {
+  border-color: var(--primary);
+  background: #fff;
+}
+
+/* hide number spinners */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+input[type="number"] { -moz-appearance: textfield; }
+
+/* ── CHART ── */
+.chart-wrap {
+  position: relative;
+  height: 220px;
+}
+
+/* ── TRANSACTIONS ── */
+#txn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.txn-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f7f9fc;
+  border-left: 4px solid var(--gray);
+  font-size: 0.87rem;
+  gap: 8px;
+}
+.txn-item.deposit   { border-left-color: var(--green); }
+.txn-item.withdraw  { border-left-color: var(--red); }
+.txn-item.topocket  { border-left-color: var(--blue); }
+.txn-item.addpocket { border-left-color: #8e44ad; }
+.txn-item.spend     { border-left-color: #e67e22; }
+
+.txn-label { font-weight: 600; color: var(--text); }
+.txn-date  { font-size: 0.75rem; color: var(--subtext); margin-top: 2px; }
+.txn-amount { font-weight: 700; font-size: 1rem; white-space: nowrap; }
+.txn-amount.positive { color: var(--green); }
+.txn-amount.negative { color: var(--red); }
+
+.empty-msg {
+  text-align: center;
+  color: var(--subtext);
+  padding: 20px 0;
+  font-size: 0.9rem;
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+.modal-overlay.hidden { display: none; }
+
+.modal-box {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  width: 100%;
+  max-width: 340px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal-box h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.modal-box input[type="number"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 1.1rem;
+  outline: none;
+  color: var(--text);
+}
+.modal-box input[type="number"]:focus { border-color: var(--primary); }
+
+.modal-error {
+  color: var(--red);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.modal-error.hidden { display: none; }
+
+/* ── SCROLLBAR ── */
+#txn-list::-webkit-scrollbar { width: 5px; }
+#txn-list::-webkit-scrollbar-track { background: transparent; }
+#txn-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 360px) {
+  .btn { font-size: 0.78rem; padding: 10px 5px; }
+  #balance-amount, #pocket-amount { font-size: 2rem; }
+}
